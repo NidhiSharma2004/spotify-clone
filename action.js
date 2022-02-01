@@ -52,7 +52,6 @@ songItem.forEach((element, i) => {
 // audio element ke liye jis icn p click kiya hai uski id lenge or vhi same id pass kr denge audioelment.scr ke songs arry indx m 
 icns.forEach((icn) => {
   icn.addEventListener("click", (e) => {
-      console.log(e.target.id)
     let currentClick = e.target;
     if (currentClick.classList.contains("fa-play")) {
       currentClick.classList.remove("fa-play");
@@ -65,9 +64,8 @@ icns.forEach((icn) => {
       audioElement.pause()
     }
     icns.forEach((icn2) => {
-      let lastClick = icn2.firstChild;
+      let lastClick = icn2;
       if (lastClick != currentClick) {
-        console.log(lastClick);
         lastClick.classList.remove("fa-pause");
         lastClick.classList.add("fa-play");
       }
