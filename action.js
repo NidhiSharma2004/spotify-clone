@@ -1,5 +1,6 @@
 let audioElement = new Audio();
 let Player = document.getElementById("Player");
+let songList = document.querySelector(".songList")
 let icns = document.querySelectorAll(".icn");
 let songItem = document.querySelectorAll(".songItem");
 let masterPlay = document.querySelector(".masterPlay");
@@ -16,26 +17,37 @@ let songs = [
     Name: "love you zindagi",
     filePath: "audio/song1.mp3",
     coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "0"
+
   },
   {
     Name: "dilbar",
     filePath: "audio/song6.mp3",
     coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "1"
   },
   {
     Name: "salm-e-Ishq",
     filePath: "audio/song3.mp3",
     coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "2"
   },
   {
     Name: "namo-namo",
     filePath: "audio/song4.mp3",
     coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "3"
   },
   {
     Name: "zara-zara",
     filePath: "audio/song5.mp3",
     coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "4"
   },
   // {Name:"dilbar",       filePath:"audio/song6.mp3", coverPath: "covers/download.jpg" },
   // {Name:"ishq sufiyana", filePath:"audio/song7.mp3", coverPath: "covers/download.jpg" },
@@ -46,10 +58,31 @@ let songs = [
   // {Name:"namo-namo", filePath:"audio/song4.mp3", coverPath: "covers/download.jpg" },
 ];
 // after slecting all songitem i have to make each song ka index song ke index ke equall
-songItem.forEach((element, i) => {
-  element.querySelector(".songName").innerText = songs[i].Name;
-});
-let songlen = songs.length;
+// songItem.forEach((element, i) => {
+//   element.querySelector(".songName").innerText = songs[i].Name;
+// });
+
+window.addEventListener("DOMContentLoaded", function () {
+  displaySong(songs);
+  maintainIcns();
+  masterplayfun();
+})
+
+function displaySong(arr) {
+  let output = arr.map((item) => {
+    return `
+    <div class="songItem">
+    <img src="${item.coverPath}" class="image" />
+    <span class="songName">${item.Name}</span>
+    <span id="${item.id}" class="${item.class}"></span>
+    <audio class="audio" src=""></audio>
+  </div>
+    `
+  })
+  output = output.join(" ")
+  songList.innerHTML = `<h1>Best Song Collection</h1> ${output}`
+}
+
 // change icn on click
 // slect all the icns and use for each and add the class of pause and remove play class and vice-versa
 // now phele bar jo click hoga vo currentClick hoga classlist add or remove kr denge but jb second click hoga
@@ -58,50 +91,64 @@ let songlen = songs.length;
 // audio element ke liye jis icn p click kiya hai uski id lenge or vhi same id pass kr denge audioelment.scr ke songs arry indx m
 
 let id;
-icns.forEach((icn) => {
-  icn.addEventListener("click", (e) => {
-    let currentClick = e.target;
-    id = e.target.id;
-    if (currentClick.classList.contains("fa-play")) {
-      currentClick.classList.remove("fa-play");
-      currentClick.classList.add("fa-pause");
-      masterPlay.classList.add("fa-pause-circle");
-      masterPlay.classList.remove("fa-play-circle");
-      audioElement.src = songs[e.target.id].filePath;
-      audioElement.play();
-    } else {
-      currentClick.classList.add("fa-play");
-      currentClick.classList.remove("fa-pause");
-      masterPlay.classList.remove("fa-pause-circle");
-      masterPlay.classList.add("fa-play-circle");
-      audioElement.pause();
-    }
-    icns.forEach((icn2) => {
-      let lastClick = icn2;
-      if (lastClick != currentClick) {
-        lastClick.classList.remove("fa-pause");
-        lastClick.classList.add("fa-play");
+function maintainIcns() {
+  displaySong(songs)
+  let icns = document.querySelectorAll(".icn")
+  console.log(icns)
+  icns.forEach((icn) => {
+    icn.addEventListener("click", (e) => {
+      console.log(e.target)
+      let currentClick = e.target;
+      id = e.target.id;
+      if (currentClick.classList.contains("fa-play")) {
+        currentClick.classList.remove("fa-play");
+        currentClick.classList.add("fa-pause");
+        masterPlay.classList.add("fa-pause-circle");
+        masterPlay.classList.remove("fa-play-circle");
+        audioElement.src = songs[e.target.id].filePath;
+        audioElement.play();
+      } else {
+        currentClick.classList.add("fa-play");
+        currentClick.classList.remove("fa-pause");
+        masterPlay.classList.remove("fa-pause-circle");
+        masterPlay.classList.add("fa-play-circle");
+        audioElement.pause();
       }
+      icns.forEach((icn2) => {
+        let lastClick = icn2;
+        if (lastClick != currentClick) {
+          lastClick.classList.remove("fa-pause");
+          lastClick.classList.add("fa-play");
+        }
+      });
     });
   });
-});
+}
 
-masterPlay.addEventListener("click", () => {
-  if (masterPlay.classList.contains("fa-pause-circle")) {
-    masterPlay.classList.remove("fa-pause-circle");
-    masterPlay.classList.add("fa-play-circle");
-    icns[0].classList.remove("fa-pause");
-    icns[0].classList.add("fa-play");
-    audioElement.pause();
-  } else {
-    masterPlay.classList.add("fa-pause-circle");
-    masterPlay.classList.remove("fa-play-circle");
-    audioElement.src = "audio/song1.mp3";
-    icns[0].classList.add("fa-pause");
-    icns[0].classList.remove("fa-play");
-    audioElement.play();
-  }
-});
+
+function masterplayfun() {
+  displaySong(songs)
+  
+  maintainIcns();
+  let icns = document.querySelectorAll(".icn")
+  masterPlay.addEventListener("click", () => {
+    console.log(icns)
+    if (masterPlay.classList.contains("fa-pause-circle")) {
+      masterPlay.classList.remove("fa-pause-circle");
+      masterPlay.classList.add("fa-play-circle");
+      icns[0].classList.remove("fa-pause");
+      icns[0].classList.add("fa-play");
+      audioElement.pause();
+    } else {
+      masterPlay.classList.add("fa-pause-circle");
+      masterPlay.classList.remove("fa-play-circle");
+      audioElement.src = "audio/song1.mp3";
+      icns[0].classList.add("fa-pause");
+      icns[0].classList.remove("fa-play");
+      audioElement.play();
+    }
+  });
+}
 
 audioElement.ontimeupdate = function (e) {
   bar.style.width =
