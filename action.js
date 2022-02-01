@@ -2,6 +2,8 @@ let audioElement = new Audio("audio/song1.mp3");
 let Player = document.getElementById("Player");
 let icns = document.querySelectorAll(".icn");
 let songItem = document.querySelectorAll(".songItem");
+let masterPlay = document.querySelector(".masterPlay");
+// let masterPlay = document.querySelector("#Pause");
 
 // to add song name dynamically
 
@@ -56,11 +58,15 @@ icns.forEach((icn) => {
     if (currentClick.classList.contains("fa-play")) {
       currentClick.classList.remove("fa-play");
       currentClick.classList.add("fa-pause");
+      masterPlay.classList.add("fa-pause-circle")
+      masterPlay.classList.remove("fa-play-circle")
       audioElement.src = songs[e.target.id].filePath
       audioElement.play()
     } else {
       currentClick.classList.add("fa-play");
       currentClick.classList.remove("fa-pause");
+      masterPlay.classList.remove("fa-pause-circle")
+      masterPlay.classList.add("fa-play-circle")
       audioElement.pause()
     }
     icns.forEach((icn2) => {
@@ -73,7 +79,13 @@ icns.forEach((icn) => {
   });
 });
 
-
+masterPlay.addEventListener("click",()=>{
+    if(masterPlay.classList.contains("fa-pause-circle")){
+        masterPlay.classList.remove("fa-pause-circle");
+      masterPlay.classList.add("fa-play-circle");
+      audioElement.pause()
+    }
+})
 
 
 
