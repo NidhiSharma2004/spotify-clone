@@ -49,7 +49,7 @@ let songs = [
 songItem.forEach((element, i) => {
   element.querySelector(".songName").innerText = songs[i].Name;
 });
-let songlen = songs.length
+let songlen = songs.length;
 // change icn on click
 // slect all the icns and use for each and add the class of pause and remove play class and vice-versa
 // now phele bar jo click hoga vo currentClick hoga classlist add or remove kr denge but jb second click hoga
@@ -90,11 +90,15 @@ masterPlay.addEventListener("click", () => {
   if (masterPlay.classList.contains("fa-pause-circle")) {
     masterPlay.classList.remove("fa-pause-circle");
     masterPlay.classList.add("fa-play-circle");
+    icns[0].classList.remove("fa-pause");
+    icns[0].classList.add("fa-play");
     audioElement.pause();
   } else {
     masterPlay.classList.add("fa-pause-circle");
     masterPlay.classList.remove("fa-play-circle");
     audioElement.src = "audio/song1.mp3";
+    icns[0].classList.add("fa-pause");
+    icns[0].classList.remove("fa-play");
     audioElement.play();
   }
 });
@@ -109,62 +113,45 @@ audioElement.ontimeupdate = function (e) {
     };
   }
 };
-// sbse phele declare kiya variable id ke naam se then usko equal kiya e.target.id ke taki jo bhi gana chlrha h uski 
+// sbse phele declare kiya variable id ke naam se then usko equal kiya e.target.id ke taki jo bhi gana chlrha h uski
 // id aajaye first thing is we want to increase value of id means id++ and kitne se isliye incId+1 to id ki value 1 ho jayegi
 // pas krenge id ko songs ki jo lenght hai vo 5 h and hr bar 1 ka increment hoga to jb id ki real value 3 hogi
 // to vo inc. hoke 4 ho jayegi isliye hm ise lenght se 2 km tk chalyenge kyuki jaise hi uski real value id ki 4 index hogi
 // to incr hoke 5 hojayegi and error dega islye jb value 3 se bdi hogi to use vapis zero p set kr denge or vapis loop krnge
 next.addEventListener("click", () => {
- if(id<=songs.length-2){
-  let incId = id++
-  incId+1
-  audioElement.src = songs[id].filePath;
-  audioElement.play();
- }else {
-  id=0
-  audioElement.src = songs[id].filePath;
-  audioElement.play();
- }
-})
+  if (id <= songs.length - 2) {
+    let incId = id++;
+    incId + 1;
+    audioElement.src = songs[id].filePath;
+    audioElement.play();
+  } else if (id == songs.length - 1) {
+    icns[id].classList.remove("fa-pause");
+    icns[id].classList.add("fa-play");
+    id = 0;
+    audioElement.src = songs[id].filePath;
+    audioElement.play();
+  }
+  icns[id].classList.add("fa-pause");
+  icns[id].classList.remove("fa-play");
+  icns[id - 1].classList.remove("fa-pause");
+  icns[id - 1].classList.add("fa-play");
+});
 // same as next
 back.addEventListener("click", () => {
-  if(id<=songs.length-1 && id>0){
-    let incId = id--
-    incId-1
+  if (id <= songs.length - 1 && id > 0) {
+    let incId = id--;
+    incId - 1;
     audioElement.src = songs[id].filePath;
     audioElement.play();
-   }else if(id==0){
-    id=songs.length-1
+  } else if (id == 0) {
+    icns[0].classList.remove("fa-pause");
+    icns[0].classList.add("fa-play");
+    id = songs.length - 1;
     audioElement.src = songs[id].filePath;
     audioElement.play();
-   }
+  }
+  icns[id].classList.add("fa-pause");
+  icns[id].classList.remove("fa-play");
+  icns[id + 1].classList.remove("fa-pause");
+  icns[id + 1].classList.add("fa-play");
 });
-
-
-//CHANGE BTN
-// const pauseIconClassName = "fas fa-pause";
-// const playIconClassName = 'fa-play-circle';
-// const btns = document.querySelectorAll('.btn')
-// function onChange(event){
-//     //  get the button elememt from the event
-//     const buttonElement = event.currentTarget;
-
-//     // check if play button class is present on our button
-//     const isPlayButton = buttonElement.classList.contains(playIconClassName);
-
-//     // if a play button, remove the play button class and add pause button class
-//     if(isPlayButton){
-//         buttonElement.classList.remove(playIconClassName);
-//         buttonElement.classList.add(pauseIconClassName);
-//         audioElement.play();
-//     }else{
-//         buttonElement.classList.add(playIconClassName);
-//         buttonElement.classList.remove(pauseIconClassName);
-//         audioElement.pause();
-//     }
-
-// }
-// btns.forEach(btn=>{
-//     btn.addEventListener('click', onChange);
-//     songUdate()
-// })
