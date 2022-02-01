@@ -1,6 +1,6 @@
 let audioElement = new Audio();
 let Player = document.getElementById("Player");
-let songList = document.querySelector(".songList")
+let songList = document.querySelector(".songList");
 let icns = document.querySelectorAll(".icn");
 let songItem = document.querySelectorAll(".songItem");
 let masterPlay = document.querySelector(".masterPlay");
@@ -18,36 +18,35 @@ let songs = [
     filePath: "audio/song1.mp3",
     coverPath: "covers/download.jpg",
     class: "icn fas fa-play",
-    id: "0"
-
+    id: "0",
   },
   {
     Name: "dilbar",
     filePath: "audio/song6.mp3",
     coverPath: "covers/download.jpg",
     class: "icn fas fa-play",
-    id: "1"
+    id: "1",
   },
   {
     Name: "salm-e-Ishq",
     filePath: "audio/song3.mp3",
     coverPath: "covers/download.jpg",
     class: "icn fas fa-play",
-    id: "2"
+    id: "2",
   },
   {
     Name: "namo-namo",
     filePath: "audio/song4.mp3",
     coverPath: "covers/download.jpg",
     class: "icn fas fa-play",
-    id: "3"
+    id: "3",
   },
   {
     Name: "zara-zara",
     filePath: "audio/song5.mp3",
     coverPath: "covers/download.jpg",
     class: "icn fas fa-play",
-    id: "4"
+    id: "4",
   },
   // {Name:"dilbar",       filePath:"audio/song6.mp3", coverPath: "covers/download.jpg" },
   // {Name:"ishq sufiyana", filePath:"audio/song7.mp3", coverPath: "covers/download.jpg" },
@@ -66,7 +65,9 @@ window.addEventListener("DOMContentLoaded", function () {
   displaySong(songs);
   maintainIcns();
   masterplayfun();
-})
+  nextIcn();
+  backIcn();
+});
 
 function displaySong(arr) {
   let output = arr.map((item) => {
@@ -77,10 +78,10 @@ function displaySong(arr) {
     <span id="${item.id}" class="${item.class}"></span>
     <audio class="audio" src=""></audio>
   </div>
-    `
-  })
-  output = output.join(" ")
-  songList.innerHTML = `<h1>Best Song Collection</h1> ${output}`
+    `;
+  });
+  output = output.join(" ");
+  songList.innerHTML = `<h1>Best Song Collection</h1> ${output}`;
 }
 
 // change icn on click
@@ -92,12 +93,12 @@ function displaySong(arr) {
 
 let id;
 function maintainIcns() {
-  displaySong(songs)
-  let icns = document.querySelectorAll(".icn")
-  console.log(icns)
+  displaySong(songs);
+  let icns = document.querySelectorAll(".icn");
+  console.log(icns);
   icns.forEach((icn) => {
     icn.addEventListener("click", (e) => {
-      console.log(e.target)
+      console.log(e.target);
       let currentClick = e.target;
       id = e.target.id;
       if (currentClick.classList.contains("fa-play")) {
@@ -125,14 +126,12 @@ function maintainIcns() {
   });
 }
 
-
 function masterplayfun() {
-  displaySong(songs)
-  
+  displaySong(songs);
   maintainIcns();
-  let icns = document.querySelectorAll(".icn")
   masterPlay.addEventListener("click", () => {
-    console.log(icns)
+    let icns = document.querySelectorAll(".icn");
+    // id=0;
     if (masterPlay.classList.contains("fa-pause-circle")) {
       masterPlay.classList.remove("fa-pause-circle");
       masterPlay.classList.add("fa-play-circle");
@@ -165,40 +164,58 @@ audioElement.ontimeupdate = function (e) {
 // pas krenge id ko songs ki jo lenght hai vo 5 h and hr bar 1 ka increment hoga to jb id ki real value 3 hogi
 // to vo inc. hoke 4 ho jayegi isliye hm ise lenght se 2 km tk chalyenge kyuki jaise hi uski real value id ki 4 index hogi
 // to incr hoke 5 hojayegi and error dega islye jb value 3 se bdi hogi to use vapis zero p set kr denge or vapis loop krnge
-next.addEventListener("click", () => {
-  if (id <= songs.length - 2) {
-    let incId = id++;
-    incId + 1;
-    audioElement.src = songs[id].filePath;
-    audioElement.play();
-  } else if (id == songs.length - 1) {
-    icns[id].classList.remove("fa-pause");
-    icns[id].classList.add("fa-play");
-    id = 0;
-    audioElement.src = songs[id].filePath;
-    audioElement.play();
-  }
-  icns[id].classList.add("fa-pause");
-  icns[id].classList.remove("fa-play");
-  icns[id - 1].classList.remove("fa-pause");
-  icns[id - 1].classList.add("fa-play");
-});
+
+function nextIcn() {
+  displaySong(songs);
+  maintainIcns();
+  next.addEventListener("click", () => {
+    let icns = document.querySelectorAll(".icn");
+    if (id <= songs.length - 2) {
+      let incId = id++;
+      incId + 1;
+      audioElement.src = songs[id].filePath;
+      audioElement.play();
+    } else if (id == songs.length - 1) {
+      icns[id].classList.remove("fa-pause");
+      icns[id].classList.add("fa-play");
+      id = 0;
+      audioElement.src = songs[id].filePath;
+      audioElement.play();
+    }
+    console.log(id)
+    icns[id].classList.add("fa-pause");
+    icns[id].classList.remove("fa-play");
+    if(id>0){
+    icns[id - 1].classList.remove("fa-pause");
+    icns[id - 1].classList.add("fa-play");
+    }
+
+  });
+}
 // same as next
-back.addEventListener("click", () => {
-  if (id <= songs.length - 1 && id > 0) {
-    let incId = id--;
-    incId - 1;
-    audioElement.src = songs[id].filePath;
-    audioElement.play();
-  } else if (id == 0) {
-    icns[0].classList.remove("fa-pause");
-    icns[0].classList.add("fa-play");
-    id = songs.length - 1;
-    audioElement.src = songs[id].filePath;
-    audioElement.play();
-  }
-  icns[id].classList.add("fa-pause");
-  icns[id].classList.remove("fa-play");
-  icns[id + 1].classList.remove("fa-pause");
-  icns[id + 1].classList.add("fa-play");
-});
+
+function backIcn() {
+  displaySong(songs);
+  maintainIcns();
+  let icns = document.querySelectorAll(".icn");
+  back.addEventListener("click", () => {
+    if (id > 0 && id <= songs.length - 1) {
+      let incId = id--;
+      incId - 1;
+      audioElement.src = songs[id].filePath;
+      audioElement.play();
+    } else if (id == 0) {
+      icns[id].classList.remove("fa-pause");
+      icns[id].classList.add("fa-play");
+      id = songs.length - 1;
+      audioElement.src = songs[id].filePath;
+      audioElement.play();
+    }
+    icns[id].classList.add("fa-pause");
+    icns[id].classList.remove("fa-play");
+    if (id < 4) {
+      icns[id + 1].classList.remove("fa-pause");
+      icns[id + 1].classList.add("fa-play");
+    }
+  });
+}
