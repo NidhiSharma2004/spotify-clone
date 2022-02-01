@@ -1,8 +1,11 @@
-let audioElement = new Audio("audio/song1.mp3");
+let audioElement = new Audio();
 let Player = document.getElementById("Player");
 let icns = document.querySelectorAll(".icn");
 let songItem = document.querySelectorAll(".songItem");
 let masterPlay = document.querySelector(".masterPlay");
+let myProgressBar = document.getElementById("myProgressBar");
+let bar = document.querySelector(".bar");
+let progressbar = document.querySelector(".progressbar")
 // let masterPlay = document.querySelector("#Pause");
 
 // to add song name dynamically
@@ -62,6 +65,7 @@ icns.forEach((icn) => {
       masterPlay.classList.remove("fa-play-circle")
       audioElement.src = songs[e.target.id].filePath
       audioElement.play()
+      // duration(audioElement)
     } else {
       currentClick.classList.add("fa-play");
       currentClick.classList.remove("fa-pause");
@@ -81,11 +85,29 @@ icns.forEach((icn) => {
 
 masterPlay.addEventListener("click",()=>{
     if(masterPlay.classList.contains("fa-pause-circle")){
-        masterPlay.classList.remove("fa-pause-circle");
+      masterPlay.classList.remove("fa-pause-circle");
       masterPlay.classList.add("fa-play-circle");
       audioElement.pause()
+    }else{
+      masterPlay.classList.add("fa-pause-circle");
+      masterPlay.classList.remove("fa-play-circle");
+      audioElement.src = 'audio/song1.mp3'
+      audioElement.play()
     }
 })
+
+audioElement.ontimeupdate = function(e){
+  console.log(audioElement.currentTime)
+  bar.style.width = Math.floor(audioElement.currentTime*100/audioElement.duration)+"%"
+  if(audioElement.currentTime>0){
+    progressbar.onclick = function(e){
+    console.log(audioElement.currentTime)
+    audioElement.currentTime = ((e.offsetX/progressbar.offsetWidth)*audioElement.duration)
+  }
+  }
+}
+
+
 
 
 
