@@ -118,6 +118,18 @@ function maintainIcns() {
     });
   });
 }
+
+function playMusic(item){
+  item[id].classList.add("fa-pause");
+  item[id].classList.remove("fa-play");
+}
+
+function pauseMusic(item){
+  item[id].classList.remove("fa-pause");
+  item[id].classList.add("fa-play");
+
+}
+
 function masterplayfun() {
   displaySong(songs);
   maintainIcns();
@@ -130,16 +142,17 @@ function masterplayfun() {
       if (masterPlay.classList.contains("fa-pause-circle")) {
         masterPlay.classList.remove("fa-pause-circle");
         masterPlay.classList.add("fa-play-circle");
-        icns[id].classList.remove("fa-pause");
-        icns[id].classList.add("fa-play");
-
+        // icns[id].classList.remove("fa-pause");
+        // icns[id].classList.add("fa-play");
+        pauseMusic(icns)
         audioElement.pause();
       } else {
         masterPlay.classList.add("fa-pause-circle");
         masterPlay.classList.remove("fa-play-circle");
         audioElement.src = songs[id].filePath;
-        icns[id].classList.add("fa-pause");
-        icns[id].classList.remove("fa-play");
+        // icns[id].classList.add("fa-pause");
+        // icns[id].classList.remove("fa-play");
+        playMusic(icns)
         audioElement.play();
       }
     }
@@ -173,13 +186,15 @@ function nextIcn() {
       audioElement.src = songs[id].filePath;
       audioElement.play();
     } else if (id == songs.length - 1) {
-      icns[id].classList.remove("fa-pause");
-      icns[id].classList.add("fa-play");
+      // icns[id].classList.remove("fa-pause");
+      // icns[id].classList.add("fa-play");
+      pauseMusic(icns)
       id = 0;
       audioElement.src = songs[id].filePath;
       audioElement.play();
     }
-   playId(id)
+  //  playId(id)
+  playMusic(icns)
     if (id > 0) {
       icns[id - 1].classList.remove("fa-pause");
       icns[id - 1].classList.add("fa-play");
@@ -200,14 +215,16 @@ function backIcn() {
       audioElement.src = songs[id].filePath;
       audioElement.play();
     } else if (id == 0) {
-      icns[id].classList.remove("fa-pause");
-      icns[id].classList.add("fa-play");
+      // icns[id].classList.remove("fa-pause");
+      // icns[id].classList.add("fa-play");
+      pauseMusic(icns)
       id = songs.length - 1;
       audioElement.src = songs[id].filePath;
       audioElement.play();
     }
-    icns[id].classList.add("fa-pause");
-    icns[id].classList.remove("fa-play");
+    // icns[id].classList.add("fa-pause");
+    // icns[id].classList.remove("fa-play");
+    playMusic(icns)
     if (id < songs.length-1) {
       icns[id + 1].classList.remove("fa-pause");
       icns[id + 1].classList.add("fa-play");
