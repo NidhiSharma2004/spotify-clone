@@ -8,7 +8,6 @@ let bar = document.querySelector(".bar");
 let progressbar = document.querySelector(".progressbar");
 let back = document.querySelector(".back");
 let next = document.querySelector(".next");
-// let masterPlay = document.querySelector("#Pause");
 
 // to add song name dynamically
 
@@ -56,10 +55,6 @@ let songs = [
   // {Name:"salm-e-Ishq", filePath:"audio/song3.mp3", coverPath: "covers/download.jpg" },
   // {Name:"namo-namo", filePath:"audio/song4.mp3", coverPath: "covers/download.jpg" },
 ];
-// after slecting all songitem i have to make each song ka index song ke index ke equall
-// songItem.forEach((element, i) => {
-//   element.querySelector(".songName").innerText = songs[i].Name;
-// });
 
 window.addEventListener("DOMContentLoaded", function () {
   displaySong(songs);
@@ -97,7 +92,6 @@ function maintainIcns() {
   let icns = document.querySelectorAll(".icn");
   icns.forEach((icn) => {
     icn.addEventListener("click", (e) => {
-      console.log(e.target);
       let currentClick = e.target;
       id = e.target.id;
       if (currentClick.classList.contains("fa-play")) {
@@ -124,34 +118,32 @@ function maintainIcns() {
     });
   });
 }
-
 function masterplayfun() {
   displaySong(songs);
   maintainIcns();
-  // id=0;
-  
   masterPlay.addEventListener("click", () => {
-    console.log(id)
     let icns = document.querySelectorAll(".icn");
-    
-    if (masterPlay.classList.contains("fa-pause-circle")) {
-      masterPlay.classList.remove("fa-pause-circle");
-      masterPlay.classList.add("fa-play-circle");
-      icns[id].classList.remove("fa-pause");
-      icns[id].classList.add("fa-play");
+    if (id == undefined) {
+      id = 0
+    }
+    if (id != undefined) {
+      if (masterPlay.classList.contains("fa-pause-circle")) {
+        masterPlay.classList.remove("fa-pause-circle");
+        masterPlay.classList.add("fa-play-circle");
+        icns[id].classList.remove("fa-pause");
+        icns[id].classList.add("fa-play");
 
-      audioElement.pause();
-    } else {
-      masterPlay.classList.add("fa-pause-circle");
-      masterPlay.classList.remove("fa-play-circle");
-      audioElement.src = songs[id].filePath;
-      icns[id].classList.add("fa-pause");
-      icns[id].classList.remove("fa-play");
-      audioElement.play();
-    } 
-    
+        audioElement.pause();
+      } else {
+        masterPlay.classList.add("fa-pause-circle");
+        masterPlay.classList.remove("fa-play-circle");
+        audioElement.src = songs[id].filePath;
+        icns[id].classList.add("fa-pause");
+        icns[id].classList.remove("fa-play");
+        audioElement.play();
+      }
+    }
   });
-  // nextIcn() 
 }
 
 audioElement.ontimeupdate = function (e) {
@@ -187,12 +179,10 @@ function nextIcn() {
       audioElement.src = songs[id].filePath;
       audioElement.play();
     }
-    console.log(id)
-    icns[id].classList.add("fa-pause");
-    icns[id].classList.remove("fa-play");
-    if(id>0){
-    icns[id - 1].classList.remove("fa-pause");
-    icns[id - 1].classList.add("fa-play");
+   playId(id)
+    if (id > 0) {
+      icns[id - 1].classList.remove("fa-pause");
+      icns[id - 1].classList.add("fa-play");
     }
 
   });
@@ -218,9 +208,10 @@ function backIcn() {
     }
     icns[id].classList.add("fa-pause");
     icns[id].classList.remove("fa-play");
-    if (id < 4) {
+    if (id < songs.length-1) {
       icns[id + 1].classList.remove("fa-pause");
       icns[id + 1].classList.add("fa-play");
     }
   });
 }
+
