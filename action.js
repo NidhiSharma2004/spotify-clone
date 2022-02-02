@@ -95,7 +95,6 @@ let id;
 function maintainIcns() {
   displaySong(songs);
   let icns = document.querySelectorAll(".icn");
-  console.log(icns);
   icns.forEach((icn) => {
     icn.addEventListener("click", (e) => {
       console.log(e.target);
@@ -129,24 +128,30 @@ function maintainIcns() {
 function masterplayfun() {
   displaySong(songs);
   maintainIcns();
+  // id=0;
+  
   masterPlay.addEventListener("click", () => {
+    console.log(id)
     let icns = document.querySelectorAll(".icn");
-    // id=0;
+    
     if (masterPlay.classList.contains("fa-pause-circle")) {
       masterPlay.classList.remove("fa-pause-circle");
       masterPlay.classList.add("fa-play-circle");
-      icns[0].classList.remove("fa-pause");
-      icns[0].classList.add("fa-play");
+      icns[id].classList.remove("fa-pause");
+      icns[id].classList.add("fa-play");
+
       audioElement.pause();
     } else {
       masterPlay.classList.add("fa-pause-circle");
       masterPlay.classList.remove("fa-play-circle");
-      audioElement.src = "audio/song1.mp3";
-      icns[0].classList.add("fa-pause");
-      icns[0].classList.remove("fa-play");
+      audioElement.src = songs[id].filePath;
+      icns[id].classList.add("fa-pause");
+      icns[id].classList.remove("fa-play");
       audioElement.play();
-    }
+    } 
+    
   });
+  // nextIcn() 
 }
 
 audioElement.ontimeupdate = function (e) {
