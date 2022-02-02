@@ -47,13 +47,55 @@ let songs = [
     class: "icn fas fa-play",
     id: "4",
   },
-  // {Name:"dilbar",       filePath:"audio/song6.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"ishq sufiyana", filePath:"audio/song7.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"vaaste",        filePath:"audio/song8.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"o mere dil chain", filePath:"audio/song9.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"salm-e-Ishq", filePath:"audio/song2.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"salm-e-Ishq", filePath:"audio/song3.mp3", coverPath: "covers/download.jpg" },
-  // {Name:"namo-namo", filePath:"audio/song4.mp3", coverPath: "covers/download.jpg" },
+  {
+    Name: "dilbar",
+    filePath: "audio/song6.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "5",
+  },
+  {
+    Name: "ishq sufiyana",
+    filePath: "audio/song7.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "6",
+  },
+  {
+    Name: "vaaste",
+    filePath: "audio/song8.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "7",
+  },
+  {
+    Name: "o mere dil chain",
+    filePath: "audio/song9.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "8",
+  },
+  {
+    Name: "salm-e-Ishq",
+    filePath: "audio/song2.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "9",
+  },
+  {
+    Name: "salm-e-Ishq",
+    filePath: "audio/song3.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "10",
+  },
+  {
+    Name: "namo-namo",
+    filePath: "audio/song4.mp3",
+    coverPath: "covers/download.jpg",
+    class: "icn fas fa-play",
+    id: "11",
+  },
 ];
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -130,7 +172,6 @@ function playMusic(item) {
 function pauseMusic(item) {
   item[id].classList.remove("fa-pause");
   item[id].classList.add("fa-play");
-
 }
 
 function masterPlayIcn(item2) {
@@ -149,17 +190,17 @@ function masterplayfun() {
   masterPlay.addEventListener("click", () => {
     let icns = document.querySelectorAll(".icn");
     if (id == undefined) {
-      id = 0
+      id = 0;
     }
     if (id != undefined) {
       if (masterPlay.classList.contains("fa-pause-circle")) {
-        masterPlayIcn(masterPlay)
-        pauseMusic(icns)
+        masterPlayIcn(masterPlay);
+        pauseMusic(icns);
         audioElement.pause();
       } else {
-        masterPauseIcn(masterPlay)
+        masterPauseIcn(masterPlay);
         audioElement.src = songs[id].filePath;
-        playMusic(icns)
+        playMusic(icns);
         audioElement.play();
       }
     }
@@ -188,25 +229,24 @@ function nextIcn() {
   next.addEventListener("click", () => {
     let icns = document.querySelectorAll(".icn");
     if (id != undefined) {
-      masterPauseIcn(masterPlay)
+      masterPauseIcn(masterPlay);
       if (id <= songs.length - 2) {
         let incId = id++;
         incId + 1;
         audioElement.src = songs[id].filePath;
         audioElement.play();
       } else if (id == songs.length - 1) {
-        pauseMusic(icns)
+        pauseMusic(icns);
         id = 0;
         audioElement.src = songs[id].filePath;
         audioElement.play();
       }
-      playMusic(icns)
+      playMusic(icns);
       if (id > 0) {
         icns[id - 1].classList.remove("fa-pause");
         icns[id - 1].classList.add("fa-play");
       }
     }
-
   });
 }
 // same as next
@@ -217,19 +257,19 @@ function backIcn() {
   let icns = document.querySelectorAll(".icn");
   back.addEventListener("click", () => {
     if (id != undefined) {
-      masterPauseIcn(masterPlay)
+      masterPauseIcn(masterPlay);
       if (id > 0 && id <= songs.length - 1) {
         let incId = id--;
         incId - 1;
         audioElement.src = songs[id].filePath;
         audioElement.play();
       } else if (id == 0) {
-        pauseMusic(icns)
+        pauseMusic(icns);
         id = songs.length - 1;
         audioElement.src = songs[id].filePath;
         audioElement.play();
       }
-      playMusic(icns)
+      playMusic(icns);
       if (id < songs.length - 1) {
         icns[id + 1].classList.remove("fa-pause");
         icns[id + 1].classList.add("fa-play");
@@ -237,4 +277,3 @@ function backIcn() {
     }
   });
 }
-
