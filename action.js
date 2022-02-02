@@ -119,15 +119,28 @@ function maintainIcns() {
   });
 }
 
-function playMusic(item){
+// to play music we have to add pause icn and remove play icn so make this function instead of passsing directly
+// icns i m passing here item becoz it show error kyuki icns paas krne se ye id bhi leta or fir ise or khi bhi
+// use nhi kr skte and same on other function as well
+function playMusic(item) {
   item[id].classList.add("fa-pause");
   item[id].classList.remove("fa-play");
 }
 
-function pauseMusic(item){
+function pauseMusic(item) {
   item[id].classList.remove("fa-pause");
   item[id].classList.add("fa-play");
 
+}
+
+function masterPlayIcn(item2) {
+  item2.classList.remove("fa-pause-circle");
+  item2.classList.add("fa-play-circle");
+}
+
+function masterPauseIcn(item2) {
+  item2.classList.add("fa-pause-circle");
+  item2.classList.remove("fa-play-circle");
 }
 
 function masterplayfun() {
@@ -140,18 +153,12 @@ function masterplayfun() {
     }
     if (id != undefined) {
       if (masterPlay.classList.contains("fa-pause-circle")) {
-        masterPlay.classList.remove("fa-pause-circle");
-        masterPlay.classList.add("fa-play-circle");
-        // icns[id].classList.remove("fa-pause");
-        // icns[id].classList.add("fa-play");
+        masterPlayIcn(masterPlay)
         pauseMusic(icns)
         audioElement.pause();
       } else {
-        masterPlay.classList.add("fa-pause-circle");
-        masterPlay.classList.remove("fa-play-circle");
+        masterPauseIcn(masterPlay)
         audioElement.src = songs[id].filePath;
-        // icns[id].classList.add("fa-pause");
-        // icns[id].classList.remove("fa-play");
         playMusic(icns)
         audioElement.play();
       }
@@ -180,24 +187,24 @@ function nextIcn() {
   maintainIcns();
   next.addEventListener("click", () => {
     let icns = document.querySelectorAll(".icn");
-    if (id <= songs.length - 2) {
-      let incId = id++;
-      incId + 1;
-      audioElement.src = songs[id].filePath;
-      audioElement.play();
-    } else if (id == songs.length - 1) {
-      // icns[id].classList.remove("fa-pause");
-      // icns[id].classList.add("fa-play");
-      pauseMusic(icns)
-      id = 0;
-      audioElement.src = songs[id].filePath;
-      audioElement.play();
-    }
-  //  playId(id)
-  playMusic(icns)
-    if (id > 0) {
-      icns[id - 1].classList.remove("fa-pause");
-      icns[id - 1].classList.add("fa-play");
+    if (id != undefined) {
+      masterPauseIcn(masterPlay)
+      if (id <= songs.length - 2) {
+        let incId = id++;
+        incId + 1;
+        audioElement.src = songs[id].filePath;
+        audioElement.play();
+      } else if (id == songs.length - 1) {
+        pauseMusic(icns)
+        id = 0;
+        audioElement.src = songs[id].filePath;
+        audioElement.play();
+      }
+      playMusic(icns)
+      if (id > 0) {
+        icns[id - 1].classList.remove("fa-pause");
+        icns[id - 1].classList.add("fa-play");
+      }
     }
 
   });
@@ -209,25 +216,24 @@ function backIcn() {
   maintainIcns();
   let icns = document.querySelectorAll(".icn");
   back.addEventListener("click", () => {
-    if (id > 0 && id <= songs.length - 1) {
-      let incId = id--;
-      incId - 1;
-      audioElement.src = songs[id].filePath;
-      audioElement.play();
-    } else if (id == 0) {
-      // icns[id].classList.remove("fa-pause");
-      // icns[id].classList.add("fa-play");
-      pauseMusic(icns)
-      id = songs.length - 1;
-      audioElement.src = songs[id].filePath;
-      audioElement.play();
-    }
-    // icns[id].classList.add("fa-pause");
-    // icns[id].classList.remove("fa-play");
-    playMusic(icns)
-    if (id < songs.length-1) {
-      icns[id + 1].classList.remove("fa-pause");
-      icns[id + 1].classList.add("fa-play");
+    if (id != undefined) {
+      masterPauseIcn(masterPlay)
+      if (id > 0 && id <= songs.length - 1) {
+        let incId = id--;
+        incId - 1;
+        audioElement.src = songs[id].filePath;
+        audioElement.play();
+      } else if (id == 0) {
+        pauseMusic(icns)
+        id = songs.length - 1;
+        audioElement.src = songs[id].filePath;
+        audioElement.play();
+      }
+      playMusic(icns)
+      if (id < songs.length - 1) {
+        icns[id + 1].classList.remove("fa-pause");
+        icns[id + 1].classList.add("fa-play");
+      }
     }
   });
 }
